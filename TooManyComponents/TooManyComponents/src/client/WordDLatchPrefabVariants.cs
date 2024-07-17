@@ -1,48 +1,29 @@
-﻿using JimmysUnityUtilities;
-using LogicWorld.Interfaces;
+using JimmysUnityUtilities;
 using LogicWorld.References;
 using LogicWorld.Rendering.Dynamics;
 using LogicWorld.SharedCode.Components;
 using System.Collections.Generic;
+using LogicAPI.Data;
 using UnityEngine;
 
 namespace TooManyComponents.Client.ClientCode
 {
-    public class WordDLatch1PrefabVariantInfo : WordDLatchPrefabVariantBase
+    public class PixelDisplayPrefabGenerator : DynamicPrefabGenerator<int>
     {
-        public override string ComponentTextID => "TooManyComponents.WordDLatch1Byte";
-        public override byte wordSize => 1;
-    }
+        private byte wordSize;
 
-    public class WordDLatch2PrefabVariantInfo : WordDLatchPrefabVariantBase
-    {
-        public override string ComponentTextID => "TooManyComponents.WordDLatch2Byte";
-        public override byte wordSize => 2;
-    }
-
-    public class WordDLatch4PrefabVariantInfo : WordDLatchPrefabVariantBase
-    {
-        public override string ComponentTextID => "TooManyComponents.WordDLatch4Byte";
-        public override byte wordSize => 4;
-    }
-
-    public class WordDLatch8PrefabVariantInfo : WordDLatchPrefabVariantBase
-    {
-        public override string ComponentTextID => "TooManyComponents.WordDLatch8Byte";
-        public override byte wordSize => 8;
-    }
-
-    public abstract class WordDLatchPrefabVariantBase : PrefabVariantInfo
-    {
-        public override abstract string ComponentTextID { get; }
-        public abstract byte wordSize { get; }
-
-        public override PrefabVariantIdentifier GetDefaultComponentVariant()
+        public override void Setup(ComponentInfo info)
         {
-            return new PrefabVariantIdentifier(wordSize * 8 + 1, wordSize * 8);
+            wordSize = (byte) info.CodeInfoInts[0];
         }
 
-        public override ComponentVariant GenerateVariant(PrefabVariantIdentifier identifier)
+        protected override int GetIdentifierFor(ComponentData componentData)
+            => 0;
+
+        public override (int inputCount, int outputCount) GetDefaultPegCounts()
+            => (wordSize * 8 + 1, wordSize * 8);
+
+        protected override Prefab GeneratePrefabFor(int _)
         {
             List<Block> blocks = new List<Block>();
             blocks.Add(
@@ -80,14 +61,11 @@ namespace TooManyComponents.Client.ClientCode
                 }
                 );
 
-            return new ComponentVariant
+            return new Prefab
             {
-                VariantPrefab = new Prefab
-                {
-                    Blocks = blocks.ToArray(),
-                    Inputs = inputs.ToArray(),
-                    Outputs = outputs.ToArray()
-                }
+                Blocks = blocks.ToArray(),
+                Inputs = inputs.ToArray(),
+                Outputs = outputs.ToArray()
             };
         }
     }

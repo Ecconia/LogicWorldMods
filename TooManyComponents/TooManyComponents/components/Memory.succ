@@ -4,13 +4,15 @@
 WordDLatch1Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.PixelDisplayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordDLatch
     logicCode: TooManyComponents.Server.LogicCode.WordDLatch
     placingRules:
         offsetDimensions: (2, 8)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 8)
+    codeInfoInts:
+        - 1 # Amount of bytes
         
 #######################
 # Word D Latch 2 Byte #
@@ -18,13 +20,15 @@ WordDLatch1Byte:
 WordDLatch2Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.PixelDisplayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordDLatch
     logicCode: TooManyComponents.Server.LogicCode.WordDLatch
     placingRules:
         offsetDimensions: (2, 16)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 16)
+    codeInfoInts:
+        - 2 # Amount of bytes
         
 #######################
 # Word D Latch 4 Byte #
@@ -32,13 +36,15 @@ WordDLatch2Byte:
 WordDLatch4Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.PixelDisplayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordDLatch
     logicCode: TooManyComponents.Server.LogicCode.WordDLatch
     placingRules:
         offsetDimensions: (2, 32)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 32)
+    codeInfoInts:
+        - 4 # Amount of bytes
 
 #######################
 # Word D Latch 8 Byte #
@@ -46,13 +52,15 @@ WordDLatch4Byte:
 WordDLatch8Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.PixelDisplayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordDLatch
     logicCode: TooManyComponents.Server.LogicCode.WordDLatch
     placingRules:
         offsetDimensions: (2, 64)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 64)
+    codeInfoInts:
+        - 8 # Amount of bytes
         
         
 #####################
@@ -61,13 +69,15 @@ WordDLatch8Byte:
 WordRelay1Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.WordRelayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordRelay
     logicCode: TooManyComponents.Server.LogicCode.WordRelay
     placingRules:
         offsetDimensions: (2, 8)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 8)
+    codeInfoInts:
+        - 1 # Amount of bytes
 
 #####################
 # Word Relay 2 Byte #
@@ -75,13 +85,15 @@ WordRelay1Byte:
 WordRelay2Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.WordRelayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordRelay
     logicCode: TooManyComponents.Server.LogicCode.WordRelay
     placingRules:
         offsetDimensions: (2, 16)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 16)
+    codeInfoInts:
+        - 2 # Amount of bytes
         
 #####################
 # Word Relay 4 Byte #
@@ -89,13 +101,15 @@ WordRelay2Byte:
 WordRelay4Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.WordRelayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordRelay
     logicCode: TooManyComponents.Server.LogicCode.WordRelay
     placingRules:
         offsetDimensions: (2, 32)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 32)
+    codeInfoInts:
+        - 4 # Amount of bytes
         
 #####################
 # Word Relay 8 Byte #
@@ -103,10 +117,12 @@ WordRelay4Byte:
 WordRelay8Byte:
     column: "Memory"
     category: "Basic"
-    prefab: dynamic
+    prefabGenerator: TooManyComponents.Client.ClientCode.WordRelayPrefabGenerator
     clientCode: TooManyComponents.Client.ClientCode.WordRelay
     logicCode: TooManyComponents.Server.LogicCode.WordRelay
     placingRules:
         offsetDimensions: (2, 64)
         defaultOffset: (0, 0)
         gridPlacingDimensions: (2, 64)
+    codeInfoInts:
+        - 8 # Amount of bytes

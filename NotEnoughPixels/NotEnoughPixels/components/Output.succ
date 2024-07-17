@@ -1,7 +1,7 @@
-﻿PixelDisplay:
+PixelDisplay:
     column: "Output"
     category: "Displays"
-    prefab: dynamic
+    prefabGenerator: NotEnoughPixels.Client.ClientCode.PixelDisplayPrefabGenerator
     clientCode: NotEnoughPixels.Client.ClientCode.PixelDisplay
     logicCode: NotEnoughPixels.Server.LogicCode.PixelDisplay
-    placingRules: dynamic
+    placingRulesGenerator: NotEnoughPixels.Client.ClientCode.PixelDisplayPlacingRulesGenerator

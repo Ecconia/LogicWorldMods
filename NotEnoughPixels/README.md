@@ -1,6 +1,6 @@
 # NotEnoughPixels
 
- Not Enough Pixels Version 1.0.2 for LogicWorld 0.91.2.
+ Not Enough Pixels Version 1.0.3 for LogicWorld 0.91.4.
  Requires System.IO.Compression.dll to be loaded. Can be done with cheeseloader
 
 ## PixelDisplay

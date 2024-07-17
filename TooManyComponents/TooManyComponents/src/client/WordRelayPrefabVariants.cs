@@ -1,48 +1,29 @@
-﻿using JimmysUnityUtilities;
-using LogicWorld.Interfaces;
+using JimmysUnityUtilities;
 using LogicWorld.References;
 using LogicWorld.Rendering.Dynamics;
 using LogicWorld.SharedCode.Components;
 using System.Collections.Generic;
+using LogicAPI.Data;
 using UnityEngine;
 
 namespace TooManyComponents.Client.ClientCode
 {
-    public class WordRelay1PrefabVariantInfo : WordRelayPrefabVariantBase
+    public class WordRelayPrefabGenerator : DynamicPrefabGenerator<int>
     {
-        public override string ComponentTextID => "TooManyComponents.WordRelay1Byte";
-        public override byte wordSize => 1;
-    }
+        private byte wordSize;
 
-    public class WordRelay2PrefabVariantInfo : WordRelayPrefabVariantBase
-    {
-        public override string ComponentTextID => "TooManyComponents.WordRelay2Byte";
-        public override byte wordSize => 2;
-    }
-
-    public class WordRelay4PrefabVariantInfo : WordRelayPrefabVariantBase
-    {
-        public override string ComponentTextID => "TooManyComponents.WordRelay4Byte";
-        public override byte wordSize => 4;
-    }
-
-    public class WordRelay8PrefabVariantInfo : WordRelayPrefabVariantBase
-    {
-        public override string ComponentTextID => "TooManyComponents.WordRelay8Byte";
-        public override byte wordSize => 8;
-    }
-
-    public abstract class WordRelayPrefabVariantBase : PrefabVariantInfo
-    {
-        public override abstract string ComponentTextID { get; }
-        public abstract byte wordSize { get; }
-
-        public override PrefabVariantIdentifier GetDefaultComponentVariant()
+        public override void Setup(ComponentInfo info)
         {
-            return new PrefabVariantIdentifier(wordSize * 8 * 2 + 1, 0);
+            wordSize = (byte) info.CodeInfoInts[0];
         }
 
-        public override ComponentVariant GenerateVariant(PrefabVariantIdentifier identifier)
+        public override (int inputCount, int outputCount) GetDefaultPegCounts()
+            => (wordSize * 8 * 2 + 1, 0);
+
+        protected override int GetIdentifierFor(ComponentData componentData)
+            => 0;
+
+        protected override Prefab GeneratePrefabFor(int _)
         {
             List<Block> blocks = new List<Block>();
             blocks.Add(
@@ -84,14 +65,10 @@ namespace TooManyComponents.Client.ClientCode
                 }
                 );
 
-            return new ComponentVariant
+            return new Prefab
             {
-                VariantPrefab = new Prefab
-                {
-                    Blocks = blocks.ToArray(),
-                    Inputs = inputs.ToArray(),
-                    Outputs = new ComponentOutput[] { }
-                }
+                Blocks = blocks.ToArray(),
+                Inputs = inputs.ToArray(),
             };
         }
     }

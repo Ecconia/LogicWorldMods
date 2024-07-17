@@ -1,4 +1,4 @@
-﻿using NotEnoughPixels.Shared.ComponentCustomData;
+using NotEnoughPixels.Shared.ComponentCustomData;
 using JimmysUnityUtilities;
 using LogicWorld.ClientCode.Resizing;
 using LogicWorld.Interfaces;
@@ -8,9 +8,9 @@ using LogicWorld.Rendering.Components;
 using LogicWorld.Rendering.Dynamics;
 using LogicWorld.SharedCode.Components;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using LogicAPI.Data;
 using UnityEngine;
 
 namespace NotEnoughPixels.Client.ClientCode
@@ -119,11 +119,6 @@ namespace NotEnoughPixels.Client.ClientCode
             }
         }
 
-        public override PlacingRules GenerateDynamicPlacingRules()
-        {
-            return PlacingRules.FlippablePanelOfSize(SizeX, SizeZ);
-        }
-        
         protected override IDecoration[] GenerateDecorations(Transform parentToCreateDecorationsUnder)
         {
             if (screen == null)
@@ -153,26 +148,33 @@ namespace NotEnoughPixels.Client.ClientCode
         }
     }
 
-    public class PixelDisplayVariantInfo : PrefabVariantInfo
+    public class PixelDisplayPlacingRulesGenerator : DynamicPlacingRulesGenerator<Vector2Int, IPixelDisplayData>
     {
-        public override string ComponentTextID => "NotEnoughPixels.PixelDisplay";
+        protected override Vector2Int GetIdentifierFor(ComponentData componentData, IPixelDisplayData data)
+            => new Vector2Int(data.SizeX, data.SizeZ);
 
-        public override PrefabVariantIdentifier GetDefaultComponentVariant()
-        {
-            return new PrefabVariantIdentifier(42, 0);
-        }
+        protected override Vector2Int GetDefaultIdentifier()
+            => new Vector2Int(3, 2);
 
-        public override ComponentVariant GenerateVariant(PrefabVariantIdentifier identifier)
+        protected override PlacingRules GeneratePlacingRulesFor(Vector2Int identifier)
+            => PlacingRules.FlippablePanelOfSize(identifier.x, identifier.y);
+    }
+
+    public class PixelDisplayPrefabGenerator : DynamicPrefabGenerator<int>
+    {
+        protected override int GetIdentifierFor(ComponentData componentData)
+            => componentData.InputCount;
+
+        public override (int inputCount, int outputCount) GetDefaultPegCounts()
+            => (42, 0);
+
+        protected override Prefab GeneratePrefabFor(int inputCount)
         {
-            if (identifier.OutputCount != 0)
-            {
-                throw new Exception("Displays cannot have any outputs");
-            }
-            if (identifier.InputCount < 1)
+            if (inputCount < 1)
             {
                 throw new Exception("Displays must have at least one input");
             }
-            ComponentInput[] array = new ComponentInput[identifier.InputCount];
+            ComponentInput[] array = new ComponentInput[inputCount];
             for (int i = 0; i < array.Length; i++)
             {
                 int col = i % 8;
@@ -185,8 +187,7 @@ namespace NotEnoughPixels.Client.ClientCode
                     Length = length
                 };
             }
-            ComponentVariant componentVariant = new ComponentVariant();
-            componentVariant.VariantPrefab = new Prefab
+            return new Prefab
             {
                 Blocks = new Block[2]
                 {
@@ -213,7 +214,6 @@ namespace NotEnoughPixels.Client.ClientCode
                 },
                 Inputs = array
             };
-            return componentVariant;
         }
     }
 }
